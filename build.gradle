@@ -1,0 +1,22 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.4.21'
+}
+
+apply from: './dependencies.gradle'
+
+group 'me.skyface'
+version '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+
+    implementation "io.ktor:ktor-client-okhttp:$versions.ktor"
+    implementation "com.squareup.okhttp3:logging-interceptor:$versions.logInterceptor"
+    implementation "io.ktor:ktor-client-gson:$versions.ktor"
+
+    implementation "org.jsoup:jsoup:$versions.jsoup"
+}
