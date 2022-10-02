@@ -1,18 +1,17 @@
 import kotlinx.coroutines.*
 
-interface IIndeterminateProgressBar {
+interface IndeterminateProgressBar {
     suspend fun start()
     fun stop(doneMessage: String = "Done!")
 }
 
-class IndeterminateProgressBar(
+class IndeterminateProgressBarImpl(
     private var prefix: String = "",
     private var suffix: String = "",
     private val bordered: Char = '▱',
     private val filled: Char = '▰',
     private val length: Short = 10,
-) : IIndeterminateProgressBar {
-
+) : IndeterminateProgressBar {
     private val progress: String
         get() {
             var progress = ""
@@ -32,11 +31,10 @@ class IndeterminateProgressBar(
     private var elapsedTime = 0L
     private var job: Job? = null
 
-    @Suppress("NAME_SHADOWING")
     override suspend fun start() {
         val startTime = System.currentTimeMillis()
         job = CoroutineScope(Dispatchers.IO).launch {
-            this@IndeterminateProgressBar.apply {
+            this@IndeterminateProgressBarImpl.apply {
                 while (true) {
                     for (i in 0 until length) {
                         elapsedTime = System.currentTimeMillis() - startTime

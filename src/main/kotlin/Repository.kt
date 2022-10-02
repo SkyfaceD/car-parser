@@ -6,7 +6,7 @@ class Repository(
     private val api: Api,
     private val parser: Parser,
 ) {
-    private val ipb = IndeterminateProgressBar(length = 5)
+    private val ipb = IndeterminateProgressBarImpl()
 
     suspend fun parseIds(country: Country, range: IntRange, delayInMillis: Long = 500L): List<String> {
         ipb.updatePrefix("Fetching car ids")
@@ -59,10 +59,11 @@ class Repository(
         ipb.updatePrefix("Writing parsed data into file $filename.csv")
         ipb.start()
 
-        val fileWriter = FileWriter("$filename.csv", Charset.forName("UTF-8"))
-        fileWriter.appendLine(plainParameters())
+        val fileWriter = FileWriter("out/$filename.csv", Charset.forName("UTF-8"))
+
+        fileWriter.appendLine(CarDetails.header)
         carsDetails.forEach { carDetails ->
-            fileWriter.appendLine(carDetails.toString())
+            fileWriter.appendLine(carDetails.asCsv())
         }
         fileWriter.flush()
         fileWriter.close()

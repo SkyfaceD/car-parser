@@ -12,11 +12,12 @@ data class CarDetails(
     val color: String?,
     val driveUnit: String?
 ) {
-    override fun toString(): String {
-        return "$price,$brand,$name,$city,$body,$engineVolume,$mileage,$transmission,$steeringWheel,$color,$driveUnit"
+    companion object {
+        val header: String
+            get() = "price,brand,name,city,body,engineVolume,mileage,transmission,steeringWheel,color,driveUnit"
     }
 }
 
-fun plainParameters(): String {
-    return "price,brand,name,city,body,engineVolume,mileage,transmission,steeringWheel,color,driveUnit"
+fun CarDetails.asCsv(): String {
+    return "$price,$brand,$name,$city,$body,$engineVolume,$mileage,$transmission,$steeringWheel,$color,$driveUnit"
 }
