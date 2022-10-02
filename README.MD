@@ -3,3 +3,5 @@
 
 # Demo
 ![Demo](.github/gifs/demo.gif)
+
+Output file from demo you can find in [out](/out) directory
