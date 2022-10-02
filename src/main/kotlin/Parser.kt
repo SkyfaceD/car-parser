@@ -1,24 +1,20 @@
 import org.jsoup.Jsoup
 
-interface IParser {
-    suspend fun ids(html: String): List<String>
-    suspend fun details(html: String): CarDetails
-}
-
-class Parser : IParser {
-    override suspend fun ids(html: String): List<String> {
+class Parser  {
+    fun ids(html: String): List<String> {
         val ids = arrayListOf<String>()
 
         val doc = Jsoup.parse(html)
-        val elements = doc.select("#results").select("div.row.vw-item.list-item.a-elem")
-        for (element in elements) {
-            ids.add(element.attr("data-id"))
+        val list = doc.select("#results").select("div.a-list")[0]
+        val cards = list.getElementsByClass("a-card")
+        cards.forEach {
+            ids.add(it.attr("data-id"))
         }
 
         return ids
     }
 
-    override suspend fun details(html: String): CarDetails {
+    fun details(html: String): CarDetails {
         val doc = Jsoup.parse(html)
 
         val titleSpans = doc.select("h1.offer__title").select("span")
